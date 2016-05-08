@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+
+  "name": "echo-chrome",
+  "description": "This extension lets you use Echo to browse the web hands-free",
+  "version": "1.0",
+
+  "permissions": ["tabs", "identity", "webNavigation", "bookmarks", "downloads", "sessions"],
+
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+  {
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["jquery-1.9.1.min.js", "firebase.js" ,"actions.js", "parse.js"]
+}
+  ],
+  "content_security_policy": "script-src 'self' https://cdn.firebase.com https://*.firebaseio.com; object-src 'self'"
+}
