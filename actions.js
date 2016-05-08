@@ -1,4 +1,5 @@
 var data;
+var image;
 var timer;
 var synth = window.speechSynthesis;
 var utterThis = new SpeechSynthesisUtterance("Sorry, I don't understand that request.");
@@ -6,14 +7,15 @@ var utterThis = new SpeechSynthesisUtterance("Sorry, I don't understand that req
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     console.log("DATA: " + request.data);
-    data = request.data;
+    data = request.data.command;
+    if (data == "images") image = request.data.images;
     sendResponse({ type: "test" });
-    selectIntent(request.data);
+    selectIntent(data);
   }
 );
 
 // for every action, excute some javascript
-var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up","analyze_images"];
+var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up","analyze_images", "images"];
 
  var analyzeImages = function() {
      console.log("Try to make call for get and analyze images");
@@ -21,7 +23,7 @@ var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_for
      var srcList = [];
      for(var i in images )
      {
-         console.log("this is an OG img mofos: "+images[i].src);
+//         console.log("this is an OG img mofos: "+images[i].src);
          srcList.push(images[i].src); 
      }
      
@@ -32,7 +34,6 @@ var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_for
                 "imgArray": srcList
             },
             success: function(data){
-                console.log("images analysis works: "+data.images);
             }
         });
 
@@ -135,11 +136,13 @@ function openinnewtab(url) {
   win.focus();
 }
 
-var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp,analyzeImages];
+var images = function() {
+    synth.speak(new SpeechSynthesisUtterance("This image is about" + image));
+}
+var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp,analyzeImages, images];
 
 function selectIntent(data) {
   var foundFunction = false;
-  console.log(data);
   for (var i = 0; i < intents.length; i++) {
     if (data == intents[i]) {
       foundFunction = true;
