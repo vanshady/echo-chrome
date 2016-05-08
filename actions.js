@@ -13,30 +13,29 @@ chrome.runtime.onMessage.addListener(
 );
 
 // for every action, excute some javascript
-var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up","analyze_images"];
+var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up", "analyze_images"];
 
- var analyzeImages = function() {
-     console.log("Try to make call for get and analyze images");
-     var images = document.getElementsByTagName('img'); 
-     var srcList = [];
-     for(var i in images )
-     {
-         console.log("this is an OG img mofos: "+images[i].src);
-         srcList.push(images[i].src); 
-     }
-     
-          $.ajax({
-            url: 'http://127.0.0.1:3000/',
-            type: 'POST',
-            data: {
-                "imgArray": srcList
-            },
-            success: function(data){
-                console.log("images analysis works: "+data.images);
-            }
-        });
+var analyzeImages = function () {
+  console.log("Try to make call for get and analyze images");
+  var images = document.getElementsByTagName('img');
+  var srcList = [];
+  for (var i in images) {
+    console.log("this is an OG img mofos: " + images[i].src);
+    srcList.push(images[i].src);
+  }
 
- }
+  $.ajax({
+    url: 'http://127.0.0.1:3000/',
+    type: 'POST',
+    data: {
+      "imgArray": srcList
+    },
+    success: function (data) {
+      console.log("images analysis works: " + data.images);
+    }
+  });
+
+}
 
 
 var scrollUp = function () {
@@ -135,7 +134,7 @@ function openinnewtab(url) {
   win.focus();
 }
 
-var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp,analyzeImages];
+var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp, analyzeImages];
 
 function selectIntent(data) {
   var foundFunction = false;
