@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(
 );
 
 // for every action, excute some javascript
-var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up", "analyze_images", "pause_youtube"];
+var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up", "analyze_images", "pause_youtube", "play_youtube"];
 
 var analyzeImages = function () {
   console.log("Try to make call for get and analyze images");
@@ -136,10 +136,18 @@ function openinnewtab(url) {
   win.focus();
 }
 
+function pauseYoutube(url) {
+  $('video').pause()
+}
+
+function playYoutube(url) {
+  $('video').play()
+}
+
 var images = function() {
     synth.speak(new SpeechSynthesisUtterance("This image is about" + image));
 }
-var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp,analyzeImages, images];
+var functions = [scrollUp, scrollDown, stop, newTab, goBack, goForward, clickLink, closeTab, navigate, lookUp,analyzeImages, images, pauseYoutube, playYoutube];
 
 function selectIntent(data) {
   var foundFunction = false;
