@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(
 );
 
 // for every action, excute some javascript
-var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up", "analyze_images", "pause_youtube", "play_youtube"];
+var intents = ["scroll_up", "scroll_down", "stop", "new_tab", "go_back", "go_forward", "click_link", "close_tab", "navigate", "look_up", "analyze_images", "images", "pause_youtube", "play_youtube"];
 
 var analyzeImages = function () {
   console.log("Try to make call for get and analyze images");
